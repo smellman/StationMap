@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// 1: WebViewを追加
+import { StyleSheet, Text, View, WebView } from 'react-native';
 
 export default class App extends React.Component {
   render() {
+    // 2: WebViewのみを一旦返す
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
+      <WebView source={require('./index.html')} />
+    )
   }
 }
 
