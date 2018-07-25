@@ -18,26 +18,21 @@
   var rosen
 
   function init(api_key) {
-    // 1: window.postMessageをReactNativeのものからオリジナルの元に戻す
     window.postMessageReactNative = window.postMessage
     window.postMessage = window.originalPostMessage
     rosen = new Rosen("map", {
       apiKey: api_key,
     })
 
-    // 2: selectStationイベントを有効にする
     rosen.on('selectStation', function(data){
-      // 3: タップした場所に一つ以上の駅があれば最初の一つを利用する
       if (data.stations.length > 0) {
         var station = data.stations[0]
         var ret = {
           "code": station.code,
           "name": station.name,
         }
-        // 4: 駅すぱあと路線図にタップした駅のマーカーをセットしておく
         rosen.setStationMarker(station.code)
         var ret_string = JSON.stringify(ret)
-        // 5: React Native側のwindow.postMessageの実装を使ってクライアントに文字列としてデータを渡す
         window.postMessageReactNative(ret_string)
       }
     })
