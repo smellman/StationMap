@@ -45,10 +45,46 @@
         if (data.type == "init_map") {
           init(data.api_key)
         }
+        // 1: 命令の追加
+        if (data.type == "clear_all") {
+          clear_all()
+        }
+        if (data.type == "highlight_section") {
+          highlight_section(data.line_code, data.station_code1, data.station_code2)
+        }
+        if (data.type == "set_station_markers") {
+          set_station_markers(data.stations)
+        }
       } catch (e) {
         console.log(e)
       }
     }
   })
+
+  // 2: 画面上の強調やピンなどを全てクリアする関数
+  function clear_all() {
+    rosen.clearAll()
+  }
+
+  // 3: 区間の強調する関数
+  function highlight_section(line_code, station_code1, station_code2) {
+    // 4: 路線コードと２つの駅コードから区間を算出
+    rosen.getSectionsByStations(line_code, station_code1, station_code2).then(function(sections) {
+      // 5: 各区間のコードのみを取得
+      var section_codes = sections.map(function(section) {
+        return section.code
+      })
+      // 6: 区間を強調する
+      rosen.highlightSections(section_codes)
+    })
+  }
+
+  // 7: 駅にピンを立てる
+  function set_station_markers(stations) {
+    stations.forEach(function(station_code) {
+      rosen.setStationMarker(station_code)
+    })
+  }
+
   </script>
 </html>
