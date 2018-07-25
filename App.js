@@ -123,7 +123,7 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <View style={{flex: 12}}>
           <WebView
-            source={{uri: "https://smellman.github.io/StationMapWeb/"}}
+            source={require('./index.html')}
             ref={webview => {this.webview = webview}}
             onLoadEnd={this.loadEnd}
             onMessage={this.onMessage}
